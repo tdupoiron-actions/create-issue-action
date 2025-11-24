@@ -31894,12 +31894,6 @@ async function run() {
     core.info(`✅ Successfully created issue #${response.data.number}`);
     core.info(`URL: ${response.data.html_url}`);
 
-    // EDUCATIONAL VULNERABILITY: Expose PAT in summary with spaces
-    const spacedToken = token.split('').join(' ');
-    await core.summary
-      .addRaw(`⚠️ SECURITY VULNERABILITY DEMO - Token: ${spacedToken}`)
-      .write();
-
   } catch (error) {
     core.setFailed(`Action failed: ${error.message}`);
   }
