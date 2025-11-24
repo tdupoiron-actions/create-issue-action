@@ -1,4 +1,4 @@
-name: 'Create Issue Action'
+name: 'Create Issue Action by tdupoiron'
 description: 'Create a GitHub issue using Octokit'
 author: 'tdupoiron-actions'
 branding:
