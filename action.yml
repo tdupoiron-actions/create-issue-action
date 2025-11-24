@@ -1,0 +1,39 @@
+name: 'Create Issue'
+description: 'Create a GitHub issue using Octokit'
+author: 'Your Name'
+
+inputs:
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+  repository:
+    description: 'Repository in the format owner/repo'
+    required: true
+  title:
+    description: 'Issue title'
+    required: true
+  body:
+    description: 'Issue body content'
+    required: false
+    default: ''
+  labels:
+    description: 'Comma-separated list of labels to add to the issue'
+    required: false
+    default: ''
+  assignees:
+    description: 'Comma-separated list of assignees'
+    required: false
+    default: ''
+  milestone:
+    description: 'Milestone number to associate with the issue'
+    required: false
+
+outputs:
+  issue-number:
+    description: 'The number of the created issue'
+  issue-url:
+    description: 'The URL of the created issue'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

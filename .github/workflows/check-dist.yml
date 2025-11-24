@@ -1,0 +1,54 @@
+name: Check dist/
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+jobs:
+  check-dist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Rebuild the dist/ directory
+        run: npm run build
+
+      - name: Compare the expected and actual dist/ directories
+        run: |
+          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
+            exit 1
+          fi
+        id: diff
+
+      - name: Upload dist/ artifact if check fails
+        uses: actions/upload-artifact@v4
+        if: failure() && steps.diff.outcome == 'failure'
+        with:
+          name: dist
+          path: dist/
+
+      - name: Provide instructions on failure
+        if: failure() && steps.diff.outcome == 'failure'
+        run: |
+          echo "::error::The dist/ directory is out of sync with src/. Please run 'npm run build' and commit the changes."
+          echo "::error::You can download the expected dist/ directory from the workflow artifacts."

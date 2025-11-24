@@ -1,0 +1,24 @@
+{
+  "name": "create-issue-action",
+  "version": "1.0.0",
+  "description": "GitHub Action to create issues using Octokit",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "ncc build src/index.js -o dist --source-map --license licenses.txt"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "issue",
+    "octokit"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
+  }
+}
